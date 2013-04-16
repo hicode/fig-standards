@@ -45,8 +45,8 @@ use OtherVendor\OtherPackage\BazClass;
  *  在一个空行注释后，详细的类描述由此开始，
  *  主要用于详细说明此类、注意事项等。
  *
- *  通过上面一个新的空行，用于区分和生成两个不同的段落。
- *  
+ *  通过上面一个新的注释空行，我们可以用于区分和生成
+ *  两个不同的段落。
  *
  *  @package    yoozi
  *  @author     Saturn <yangg.hu@yoozi.cn>
@@ -57,7 +57,7 @@ use OtherVendor\OtherPackage\BazClass;
  */
 class Foo extends Bar implements FooInterface
 {
-     /**
+    /**
      * 这是一个示例方法
      *
      * @access public
@@ -533,11 +533,15 @@ $foo->bar(
 
 ## 7 注释
 
-所有注释『必须』遵循“[文档块(DocBlock)](http://manual.phpdoc.org/HTMLSmartyConverter/HandS/phpDocumentor/tutorial_phpDocumentor.howto.pkg.html#basics.docblock)”，从而通过文档生成工具 PHPDocumentor 自动生成 API 文档。 
+所有注释『必须』遵循“[文档块(DocBlock)](http://manual.phpdoc.org/HTMLSmartyConverter/HandS/phpDocumentor/tutorial_phpDocumentor.howto.pkg.html#basics.docblock)”中的规定，从而通过文档生成工具 PHPDocumentor 自动生成 API 文档。 
 
 ### 7.1 类注释
 
-每个类、方法（函数）的头部『必须』加入如下代码片段，用来描述类、方法的功能和类别等。
+* 每个类的头部『必须』加入如下代码片段，用来描述类、方法的功能和类别等。
+* 类注释第一行的 `/` 必须与类声明对齐。
+* 类注释区块最前一行上方『应当』预留一个空行。
+* 类注释区块最后一行下方『不应』预留空行。
+* 类 `@` 不同标签对应的内容，『应当』通过空格上下对齐。
 
 ```
 /**
