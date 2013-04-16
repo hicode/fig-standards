@@ -1,13 +1,9 @@
 代码样式规范
 ==================
 
-本手册在[PSR-1][]基础代码规范基础上进行继承和扩展。
+本规范是[PSR-1][]基础代码规范的继承和扩展。本规范意图是为了减少不同开发者在浏览代码时减少认知的差异。各个成员项目的共性组成了本文的样式规则。当不同的开发者在不同的项目中合作时，将会在这些不同的项目中使用一个共同的标准。 因此，本指南的好处不在于规则本身，而在于共用这些规则。
 
-本指南的意图是为了减少不同开发者在浏览代码时减少认知的差异。 为此列举一组如何格式化PHP代码的共用规则。
-
-各个成员项目的共性组成了本文的样式规则。当不同的开发者在不同的项目中合作时，将会在这些不同的项目中使用一个共同的标准。 因此，本指南的好处不在于规则本身，而在于共用这些规则。
-
-在特性关键词『必须』(MUST)，『禁止』(MUST NOT)，『必要』(REQUIRED)，『将会』(SHALL)，『不会』(SHALL NOT)，『应当』(SHOULD)，『不应』(SHOULD NOT)，『推荐』(RECOMMENDED)，『可以』(MAY)和『可选』(OPTIONAL)在这文档中将被依据[RFC 2119][]标准进行解释。
+特性关键词『必须』(MUST)，『禁止』(MUST NOT)，『必要』(REQUIRED)，『将会』(SHALL)，『不会』(SHALL NOT)，『应当』(SHOULD)，『不应』(SHOULD NOT)，『推荐』(RECOMMENDED)，『可以』(MAY)和『可选』(OPTIONAL)在这文档中将被依据[RFC 2119][]标准进行解释。
 
 [RFC 2119]: http://www.ietf.org/rfc/rfc2119.txt
 [PSR-0]: https://github.com/yoozi/fig-standards/blob/zh_CN/接受/PSR-0.md
@@ -18,12 +14,14 @@
 -----------
 
 - 代码必须遵守 [PSR-1][]。
-- 代码『必须』使用 4 个空格的缩进，而不是制表符。
-- 一行代码长度『不应』硬性限制；软限制『必须』为120个字符；也『应当』是80个字符或者更少。
+- 代码『必须』使用 4 个空格宽度的 Tab 缩进。
+- 一行代码长度『应当』是80个字符或者更少，但『不应』超过120个字符。
 - 在`namespace`声明下面『必须』有一个空行，并且`use`声明代码块下面也『必须』有一个空行。
 - 类的左花括号『必须』放到下一行，右花括号『必须』放在类主体的下一行。
 - 方法的左花括号『必须』放在下一行，右花括号『必须』放在方法主体下面。
-- 所有的属性和方法『必须』有可见性声明；`abstract`和`final`声明『必须』在可见性之前；`static`声明『必须』在可见性之后。
+- 所有的属性和方法『必须』有可见性声明：
+    - `abstract`和`final`声明『必须』在可见性之前；
+    - `static`声明『必须』在可见性之后。
 - 控制结构的关键词『必须』在后面有一个空格； 方法和函数『禁止』有。
 - 控制结构的左花括号『必须』放在同一行，右花括号『必须』放在控制主体的下一行。
 - 控制结构的左括号后面『禁止』有空格，右括号之前『禁止』有空格。
@@ -84,11 +82,28 @@ class Foo extends Bar implements FooInterface
 
 ### 2.4. 缩进
 
-代码『必须』使用4个空格的缩进，并且『禁止』使用制表符作为缩进。
+*『禁止』使用直接 Tab 制表符作为缩进方法。
+*『必须』使用 4 个*空格宽度*的 Tab 缩进。
 
-> 注意：只用空格，不和制表符混合使用，将会对避免代码差异，补丁，历史和注解中的一些问题有帮助。使用空格还可以使调整细微的缩进来改进行间对齐变得非常简单。
+需要在 Sublime Text 2 中调整符合本规范的缩进设置，前往菜单栏 `Preferences` => `Setting` 调整缩进默认值：
 
-### 2.5. 关键词和 True/False/Null
+```
+// The number of spaces a tab is considered equal to
+"tab_size": 4,
+
+// Set to true to insert spaces when tab is pressed
+"translate_tabs_to_spaces": true,
+
+// If translate_tabs_to_spaces is true, use_tab_stops will make tab and
+// backspace insert/delete up to the next tabstop
+"use_tab_stops": true,
+```
+
+调整完毕，请重启编辑器。
+
+> 注意：只用空格，不和制表符混合使用，将会对避免代码差异、补丁、历史和注解中的一些问题有帮助。使用空格还可以使调整细微的缩进来改进行间对齐变得非常简单。
+
+### 2.5. 关键词和 TRUE/FALSE/NULL
 
 * PHP[保留关键字][]『必须』使用小写。
 * PHP常量`TRUE`, `FALSE` 和 `NULL`『必须』使用大写。
@@ -483,8 +498,201 @@ $foo->bar(
 );
 ```
 
+## 7 注释
 
-7. 结论
+所有注释『必须』遵循“[文档块(DocBlock)](http://manual.phpdoc.org/HTMLSmartyConverter/HandS/phpDocumentor/tutorial_phpDocumentor.howto.pkg.html#basics.docblock)”，从而通过文档生成工具 PHPDocumentor 自动生成 API 文档。 
+
+### 7.1 类注释
+
+每个类、方法（函数）的头部『必须』加入如下代码片段，用来描述类、方法的功能和类别等。
+
+```
+/**
+ *  类的一句话描述
+ *
+ *  类的描述、说明、注意事项等
+ *
+ *  @package     （必填）项目内部英文代号
+ *  @author     （必填）英文名 <邮箱>
+ *  @copyright   （必填）2013 yoozi.cn
+ *  @todo       （可选）需要完善的内容，多个 todo 则在新行创建新的 @todo
+ *  @deprecated  （可选）即将在接下来的版本中弃用 
+ *  @link       （可选）指向资源链接或文档链接
+ */
+ ```
+
+### 7.2 方法/函数注释
+
+ ```
+ /**
+ *  （必填）方法的一句话描述
+ *
+ *  （可选）方法的描述、说明、注意事项等
+ *
+ * @todo   security check
+ * @access public
+ * @param  string
+ * @return string
+ */
+public function xml_encode($str)
+ ```
+
+### 7.3 行间注释
+
+通常我们需要对复杂逻辑的代码编写行间注释，以达到提醒其他开发人员、增加代码可读性的作用。
+
+行注释需要注意如下几点：
+
+1. 使用 `//` 双左斜线开启每个行注释，且第一个字符与斜线间保持一个空格的距离。
+2. 每行注释不要超过 70 个字符，超过部分请折多行。
+3. 使用行注释时，在大的注释块和代码间留一个空行。
+
+```
+// break up the string by newlines
+$parts = explode("\n", $str);
+
+// A longer comment that needs to give greater detail on what is
+// occurring and why can use multiple single-line comments.  Try to
+// keep the width reasonable, around 70 characters is the easiest to
+// read.  Don't hesitate to link to permanent external resources
+// that may provide greater detail:
+//
+// http://example.com/information_about_something/in_particular/
+
+$parts = $this->foo($parts);
+```
+
+### 7.4 方法、函数的注释间隔
+
+不同方法、函数间请使用如下 `注释间隔` 区分开，以此增加代码在阅读上的结构感。此间隔的缩进取决于同级方法、函数的缩进距离。同时，本间隔上下需要分别留一个空行。
+
+```
+// ------------------------------------------------------------------------
+```
+
+```
+ /**
+ * 设置经度
+ *
+ * @access protected
+ * @return void
+ */
+protected function setLongitude()
+{
+    $this->data['longitude'] = $this->post['longitude'];
+}
+
+// ------------------------------------------------------------------------
+
+ /**
+ * 设置经度
+ *
+ * @access protected
+ * @return void
+ */
+protected function setLatitude()
+{
+    $this->data['latitude'] = $this->post['latitude'];
+}
+```
+
+## 8 代码布局
+
+### 8.1 类内部方法排序
+
+类方法排序遵循：`public`、`protected`、`private`的顺序。
+
+```
+__construct
+__destruct
+public
+protected
+private
+```
+
+### 8.2 类属性声明的排序
+
+```
+public
+protected
+private
+```
+
+### 8.3 行间空行的使用
+
+行间空行的使用是一门艺术，是程序员对代码节奏的控制。说它是艺术，是因为它并没有很好的规律可言。优秀的程序员能够比较好的控制好空行的使用，从而提高代码的可读性。
+
+我的经验：
+
+1. 将逻辑上联系不太紧密的代码块，通过空行分隔开。
+2. 不要使用每行一个空行的编码风格。
+3. 具体操作请各位自己把握。
+4. 每个程序员写满 50 万行代码之后，艺术风格开始显现。:)
+
+下面举个简单的例子：
+
+```
+/**
+ * Render the final page
+ *
+ * @access public
+ * @return void
+ */
+public function render()
+{
+    // Call hook: pre render
+    $this->call_pre_render_hook();
+
+    // Iterator all the possible elements handlers
+    $handlers = array_keys($this->page_elements);
+    foreach($handlers as $handler) {
+        $this->{'set_' . $handler}();
+    }
+
+    // 信息被删除
+    if($this->post['is_deleted']) {
+        // 用户删除
+        if($post['deleted_by'] == 'user') {
+            $this->template->title(lang('posts.is_deleted'))
+                ->set_metadata('description', lang('txt_post_deleted'), 'meta')
+                ->build('posts/deleted');
+            return;
+        }
+
+        // 信息已被归档
+        show_404();
+    }
+
+    // 信息违反规则
+    if($this->post['is_abused']) {
+        $this->template->title(lang('posts.is_abused'))
+            ->set_metadata('description', lang('txt_post_deleted'), 'meta')
+            ->build('posts/deleted');
+        return;
+    }
+
+    // 信息需要人工审核
+    if($this->post['is_cursed'] {
+        $this->template->title(lang('posts.is_abused'))
+            ->build('posts/cursed');
+        return;
+    }
+
+    // Call hook: before render
+    $this->call_post_render_hook();
+
+    // Build and show the final page...
+    CI()->template
+        ->set_partial('inline_js', 'posts/posts_js')
+        ->inject_partial('active_category', $this->post['parent_category']['cate_id'])
+        ->set_metadata('og:title', $this->data['title'], 'property')
+        ->set_metadata('og:type', 'website', 'property')
+        ->set_metadata('og:url', $this->data['post_url'], 'property')
+        ->build('posts/posts', $this->data);
+}
+```
+
+9. 结论
 --------------
 
 在该指南中有很多风格的元素和做法有意被忽略掉。这些包括但不局限于：
@@ -494,5 +702,7 @@ $foo->bar(
 - 操作符和赋值
 - 行间对齐
 - 注释和文档块
-- 类名给你前缀和后缀
+- 类名前缀和后缀
 - 最佳实践
+
+游子开发团队会不断完善此文档，请各位开发成员持续关注。
