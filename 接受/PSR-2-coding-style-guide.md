@@ -1,7 +1,7 @@
 代码样式规范
 ==================
 
-本规范是[PSR-1][]基础代码规范的继承和扩展。本规范意图是为了减少不同开发者在浏览代码时减少认知的差异。各个成员项目的共性组成了本文的样式规则。当不同的开发者在不同的项目中合作时，将会在这些不同的项目中使用一个共同的标准。 因此，本指南的好处不在于规则本身，而在于共用这些规则。
+本规范是[PSR-1][]基础代码规范的继承和扩展。本规范意图是为了减少不同开发者交叉审查代码时的认知差异。各个成员项目的共性组成了本文的样式规则。当不同的开发者在不同的项目中合作时，将会在这些不同的项目中使用一个共同的标准。 因此，本指南的好处不在于规则本身，而在于共用这些规则。
 
 特性关键词『必须』(MUST)，『禁止』(MUST NOT)，『必要』(REQUIRED)，『将会』(SHALL)，『不会』(SHALL NOT)，『应当』(SHOULD)，『不应』(SHOULD NOT)，『推荐』(RECOMMENDED)，『可以』(MAY)和『可选』(OPTIONAL)在这文档中将被依据[RFC 2119][]标准进行解释。
 
@@ -25,6 +25,7 @@
 - 控制结构的关键词『必须』在后面有一个空格； 方法和函数『禁止』有。
 - 控制结构的左花括号『必须』放在同一行，右花括号『必须』放在控制主体的下一行。
 - 控制结构的左括号后面『禁止』有空格，右括号之前『禁止』有空格。
+- 类和方法『必须』添加符合规范的主食。
 
 ### 1.1. 示例
 
@@ -38,9 +39,33 @@ use FooInterface;
 use BarClass as Bar;
 use OtherVendor\OtherPackage\BazClass;
 
+/**
+ *  一句话描述类
+ *
+ *  在一个空行注释后，详细的类描述由此开始，
+ *  主要用于详细说明此类、注意事项等。
+ *
+ *  通过上面一个新的空行，用于区分和生成两个不同的段落。
+ *  
+ *
+ *  @package    yoozi
+ *  @author     Saturn <yangg.hu@yoozi.cn>
+ *  @copyright  2013 Yoozi Information Technology Co., Ltd.
+ *  @todo       需要完善和重构此代码
+ *  @deprecated 本类将在下个版本中弃用，请勿继续调用
+ *  @link       http://four.laravel.com/docs/contributing
+ */
 class Foo extends Bar implements FooInterface
 {
-    public function sampleFunction($a, $b = null)
+     /**
+     * 这是一个示例方法
+     *
+     * @access public
+     * @param  string  $a 输入参数1
+     * @param  string  $b 输入参数2，可为空
+     * @return void
+     */
+    public function sampleFunction($a, $b = NULL)
     {
         if ($a === $b) {
             bar();
@@ -51,6 +76,14 @@ class Foo extends Bar implements FooInterface
         }
     }
 
+    // ------------------------------------------------------------------------
+    
+    /**
+     * 这是另一个示例方法
+     *
+     * @access public
+     * @return void
+     */
     final public static function bar()
     {
         // method body
@@ -69,7 +102,7 @@ class Foo extends Bar implements FooInterface
 
 * 所有的PHP文件『必须』使用Unix LF(换行)作为行结束符。
 * 所有PHP文件『必须』以一个空行结束。
-* 纯PHP代码的文件关闭标签`?>`『必须』省略
+* 纯PHP代码的文件关闭标签`?>`『必须』省略。
 
 ### 2.3. 行
 
